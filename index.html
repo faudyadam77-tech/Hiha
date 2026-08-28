@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belajar Bahasa Arab - MI Kelas II</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  h1 {
+    text-align: center;
+    color: #2d3748;
+    margin-bottom: 10px;
+    font-size: 28px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+  .arabic-title {
+    text-align: center;
+    font-size: 36px;
+    color: #2b6cb0;
+    margin-bottom: 10px;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Kartu Kosakata */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+  }
+  .vocab-card {
+    background: linear-gradient(135deg, #f6f8ff 0%, #e8ecff 100%);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #c3d4ff;
+    transition: transform 0.3s;
+  }
+  .vocab-card:hover { transform: translateY(-5px); }
+  .vocab-emoji { font-size: 50px; margin-bottom: 10px; }
+  .vocab-arabic {
+    font-size: 32px;
+    color: #2b6cb0;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+    margin-bottom: 5px;
+  }
+  .vocab-latin {
+    font-size: 14px;
+    color: #718096;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .vocab-indo {
+    font-size: 16px;
+    color: #2d3748;
+    font-weight: bold;
+  }
+
+  /* Tombol */
+  .btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+  }
+  .btn-primary:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
+  .btn-success {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+  }
+  .btn-success:hover { transform: scale(1.05); }
+  .btn-warning {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    color: white;
+  }
+  .btn-center { display: block; margin: 20px auto; }
+
+  /* Form */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2d3748;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border 0.3s;
+  }
+  .form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  /* Kuis */
+  .quiz-question {
+    background: #f7fafc;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 5px solid #667eea;
+  }
+  .quiz-question h3 {
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+  .quiz-arabic {
+    font-size: 40px;
+    text-align: center;
+    color: #2b6cb0;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+    margin: 15px 0;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .quiz-option {
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+    font-size: 16px;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option.selected { border-color: #667eea; background: #667eea; color: white; }
+  .quiz-option.correct { border-color: #48bb78; background: #48bb78; color: white; }
+  .quiz-option.wrong { border-color: #f56565; background: #f56565; color: white; }
+
+  /* Hasil */
+  .result-box {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #f6f8ff, #e8ecff);
+    border-radius: 20px;
+    margin: 20px 0;
+  }
+  .result-score {
+    font-size: 72px;
+    font-weight: bold;
+    color: #2b6cb0;
+  }
+  .result-label {
+    font-size: 20px;
+    color: #718096;
+    margin-bottom: 10px;
+  }
+  .result-detail {
+    font-size: 16px;
+    color: #4a5568;
+    margin-top: 10px;
+  }
+
+  /* Setting */
+  .setting-box {
+    background: #fffbeb;
+    border: 2px solid #f6e05e;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .setting-box h3 {
+    color: #975a16;
+    margin-bottom: 10px;
+  }
+  .setting-box p {
+    color: #744210;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .setting-box input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #f6e05e;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .status-msg {
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    display: none;
+  }
+  .status-msg.success { background: #c6f6d5; color: #22543d; display: block; }
+  .status-msg.error { background: #fed7d7; color: #742a2a; display: block; }
+
+  .nav-dots {
+    text-align: center;
+    margin: 20px 0;
+  }
+  .nav-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #cbd5e0;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .nav-dot.active { background: #667eea; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>📚 Belajar Bahasa Arab</h1>
+  <p class="subtitle">MI Kelas II — Alat Tulis & Perlengkapan Kelas</p>
+  <div class="arabic-title">أَنْظُرْ إِلَى هٰذِهِ الصُّوَرِ!</div>
+
+  <!-- Navigasi -->
+  <div class="nav-dots">
+    <span class="nav-dot active" onclick="showSection('belajar')"></span>
+    <span class="nav-dot" onclick="showSection('kuis')"></span>
+    <span class="nav-dot" onclick="showSection('hasil')"></span>
+    <span class="nav-dot" onclick="showSection('setting')"></span>
+  </div>
+
+  <!-- BAGIAN 1: BELAJAR -->
+  <div id="belajar" class="section active">
+    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;">📖 Kosakata (المُفْرَدَات)</h2>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-emoji">📕</div>
+        <div class="vocab-arabic">مُدَرَّسَةٌ</div>
+        <div class="vocab-latin">mudarrasatun</div>
+        <div class="vocab-indo">Buku Catatan</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-emoji">🖊️</div>
+        <div class="vocab-arabic">قَلَمٌ</div>
+        <div class="vocab-latin">qalamun</div>
+        <div class="vocab-indo">Pena / Pensil</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-emoji">📗</div>
+        <div class="vocab-arabic">كِتَابٌ</div>
+        <div class="vocab-latin">kitābun</div>
+        <div class="vocab-indo">Buku</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-emoji">🪑</div>
+        <div class="vocab-arabic">كُرْسِيٌّ</div>
+        <div class="vocab-latin">kursiyyun</div>
+        <div class="vocab-indo">Kursi</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-emoji">🪵</div>
+        <div class="vocab-arabic">مَكْتَبٌ</div>
+        <div class="vocab-latin">maktabun</div>
+        <div class="vocab-indo">Meja</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-emoji">📋</div>
+        <div class="vocab-arabic">سَبُّورَةٌ</div>
+        <div class="vocab-latin">sabbūratun</div>
+        <div class="vocab-indo">Papan Tulis</div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-center" onclick="showSection('kuis')">️ Mulai Kuis</button>
+  </div>
+
+  <!-- BAGIAN 2: KUIS -->
+  <div id="kuis" class="section">
+    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;">✏️ Kuis Bahasa Arab</h2>
+
+    <!-- Form Nama -->
+    <div id="namaForm">
+      <div class="form-group">
+        <label>👤 Nama Lengkap:</label>
+        <input type="text" id="namaSiswa" placeholder="Tulis nama lengkapmu di sini...">
+      </div>
+      <button class="btn btn-success btn-center" onclick="mulaiKuis()">🚀 Mulai Mengerjakan</button>
+    </div>
+
+    <!-- Soal Kuis -->
+    <div id="quizArea" style="display:none;">
+      <div id="quizContainer"></div>
+      <button class="btn btn-success btn-center" onclick="submitKuis()" id="btnSubmit" style="display:none;">📤 Kirim Jawaban</button>
+    </div>
+  </div>
+
+  <!-- BAGIAN 3: HASIL -->
+  <div id="hasil" class="section">
+    <div class="result-box">
+      <div class="result-label">Nilai Kamu</div>
+      <div class="result-score" id="scoreDisplay">0</div>
+      <div class="result-detail" id="detailDisplay"></div>
+      <div class="result-detail" id="namaDisplay"></div>
+      <div id="sendStatus" style="margin-top:15px;"></div>
+    </div>
+    <button class="btn btn-primary btn-center" onclick="showSection('belajar')"> Belajar Lagi</button>
+    <button class="btn btn-warning btn-center" onclick="showSection('kuis')">✏️ Ulangi Kuis</button>
+  </div>
+
+  <!-- BAGIAN 4: PENGATURAN (untuk Guru) -->
+  <div id="setting" class="section">
+    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;">⚙️ Pengaturan Guru</h2>
+
+    <div class="setting-box">
+      <h3>📊 URL Google Apps Script</h3>
+      <p>Tempelkan URL Web App dari Google Apps Script di bawah ini. Data nilai siswa akan otomatis terkirim ke Spreadsheet Anda.</p>
+      <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/.../exec">
+      <button class="btn btn-success" style="margin-top:10px;" onclick="simpanURL()">💾 Simpan URL</button>
+      <div id="urlStatus" class="status-msg"></div>
+    </div>
+
+    <div class="setting-box">
+      <h3>📋 Cara Setup Google Spreadsheet</h3>
+      <p><b>Langkah 1:</b> Buat Google Spreadsheet baru</p>
+      <p><b>Langkah 2:</b> Tambahkan header: <code>Tanggal | Nama | Nilai | Benar | Salah</code></p>
+      <p><b>Langkah 3:</b> Klik <b>Extensions → Apps Script</b></p>
+      <p><b>Langkah 4:</b> Tempel kode berikut:</p>
+      <pre style="background:#f7fafc; padding:10px; border-radius:8px; font-size:12px; overflow-x:auto;">function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    new Date(),
+    data.nama,
+    data.nilai,
+    data.benar,
+    data.salah
+  ]);
+  return ContentService.createTextOutput(
+    JSON.stringify({status: "sukses"})
+  ).setMimeType(ContentService.MimeType.JSON);
+}</pre>
+      <p><b>Langkah 5:</b> Klik <b>Deploy → New Deployment → Web App</b></p>
+      <p><b>Langkah 6:</b> Set "Who has access" = <b>Anyone</b>, lalu Deploy</p>
+      <p><b>Langkah 7:</b> Salin URL dan tempel di kolom atas ↑</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== DATA SOAL =====
+  const soalKuis = [
+    {
+      arabic: "مُدَرَّسَةٌ",
+      pertanyaan: "Apa arti kata di atas?",
+      options: ["Buku", "Buku Catatan", "Pena", "Meja"],
+      correct: 1
+    },
+    {
+      arabic: "قَلَمٌ",
+      pertanyaan: "Apa arti kata di atas?",
+      options: ["Kursi", "Papan Tulis", "Pena", "Buku"],
+      correct: 2
+    },
+    {
+      arabic: "كِتَابٌ",
+      pertanyaan: "Apa arti kata di atas?",
+      options: ["Buku", "Meja", "Kursi", "Pena"],
+      correct: 0
+    },
+    {
+      arabic: "كُرْسِيٌّ",
+      pertanyaan: "Apa arti kata di atas?",
+      options: ["Meja", "Papan Tulis", "Buku Catatan", "Kursi"],
+      correct: 3
+    },
+    {
+      arabic: "مَكْتَبٌ",
+      pertanyaan: "Apa arti kata di atas?",
+      options: ["Kursi", "Meja", "Pena", "Buku"],
+      correct: 1
+    },
+    {
+      arabic: "سَبُّورَةٌ",
+      pertanyaan: "Apa arti kata di atas?",
+      options: ["Papan Tulis", "Buku", "Meja", "Kursi"],
+      correct: 0
+    },
+    {
+      pertanyaan: "Bahasa Arab dari 'Buku' adalah...",
+      options: ["قَلَمٌ", "كِتَابٌ", "مَكْتَبٌ", "كُرْسِيٌّ"],
+      correct: 1
+    },
+    {
+      pertanyaan: "Bahasa Arab dari 'Pena' adalah...",
+      options: ["مُدَرَّسَةٌ", "سَبُّورَةٌ", "قَلَمٌ", "مَكْتَبٌ"],
+      correct: 2
+    },
+    {
+      pertanyaan: "Bahasa Arab dari 'Kursi' adalah...",
+      options: ["مَكْتَبٌ", "كِتَابٌ", "سَبُّورَةٌ", "كُرْسِيٌّ"],
+      correct: 3
+    },
+    {
+      pertanyaan: "Bahasa Arab dari 'Papan Tulis' adalah...",
+      options: ["سَبُّورَةٌ", "مُدَرَّسَةٌ", "قَلَمٌ", "كِتَابٌ"],
+      correct: 0
+    }
+  ];
+
+  let jawabanSiswa = [];
+  let namaSiswa = "";
+
+  // ===== NAVIGASI =====
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-dot').forEach((d, i) => {
+      d.classList.remove('active');
+    });
+    const sections = ['belajar', 'kuis', 'hasil', 'setting'];
+    const idx = sections.indexOf(id);
+    if (idx >= 0) document.querySelectorAll('.nav-dot')[idx].classList.add('active');
+  }
+
+  // ===== URL SCRIPT =====
+  function getScriptURL() {
+    return localStorage.getItem('googleScriptURL') || '';
+  }
+
+  function simpanURL() {
+    const url = document.getElementById('scriptUrl').value.trim();
+    const statusEl = document.getElementById('urlStatus');
+    if (!url) {
+      statusEl.className = 'status-msg error';
+      statusEl.textContent = '❌ URL tidak boleh kosong!';
+      return;
+    }
+    if (!url.includes('script.google.com')) {
+      statusEl.className = 'status-msg error';
+      statusEl.textContent = '❌ URL tidak valid! Harus dari script.google.com';
+      return;
+    }
+    localStorage.setItem('googleScriptURL', url);
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = '✅ URL berhasil disimpan!';
+  }
+
+  // Load URL saat halaman dibuka
+  window.addEventListener('load', () => {
+    const saved = getScriptURL();
+    if (saved) document.getElementById('scriptUrl').value = saved;
+  });
+
+  // ===== KUIS =====
+  function mulaiKuis() {
+    namaSiswa = document.getElementById('namaSiswa').value.trim();
+    if (!namaSiswa) {
+      alert('⚠️ Harap isi nama terlebih dahulu!');
+      return;
+    }
+    document.getElementById('namaForm').style.display = 'none';
+    document.getElementById('quizArea').style.display = 'block';
+    renderSoal();
+  }
+
+  function renderSoal() {
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    jawabanSiswa = new Array(soalKuis.length).fill(-1);
+
+    soalKuis.forEach((soal, i) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-question';
+      let html = `<h3>Soal ${i + 1}: ${soal.pertanyaan}</h3>`;
+      if (soal.arabic) {
+        html += `<div class="quiz-arabic">${soal.arabic}</div>`;
+      }
+      html += `<div class="quiz-options">`;
+      soal.options.forEach((opt, j) => {
+        html += `<div class="quiz-option" onclick="pilihJawaban(${i}, ${j}, this)">${opt}</div>`;
+      });
+      html += `</div>`;
+      div.innerHTML = html;
+      container.appendChild(div);
+    });
+
+    document.getElementById('btnSubmit').style.display = 'block';
+  }
+
+  function pilihJawaban(soalIdx, optIdx, el) {
+    jawabanSiswa[soalIdx] = optIdx;
+    const options = el.parentElement.querySelectorAll('.quiz-option');
+    options.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function submitKuis() {
+    if (jawabanSiswa.includes(-1)) {
+      alert('⚠️ Harap jawab semua soal terlebih dahulu!');
+      return;
+    }
+
+    let benar = 0;
+    soalKuis.forEach((soal, i) => {
+      if (jawabanSiswa[i] === soal.correct) benar++;
+    });
+
+    const salah = soalKuis.length - benar;
+    const nilai = Math.round((benar / soalKuis.length) * 100);
+
+    // Tampilkan hasil
+    document.getElementById('scoreDisplay').textContent = nilai;
+    document.getElementById('detailDisplay').textContent = `✅ Benar: ${benar} | ❌ Salah: ${salah} dari ${soalKuis.length} soal`;
+    document.getElementById('namaDisplay').textContent = `👤 ${namaSiswa}`;
+
+    showSection('hasil');
+
+    // Kirim ke Spreadsheet
+    kirimKeSpreadsheet(namaSiswa, nilai, benar, salah);
+  }
+
+  function kirimKeSpreadsheet(nama, nilai, benar, salah) {
+    const url = getScriptURL();
+    const statusEl = document.getElementById('sendStatus');
+
+    if (!url) {
+      statusEl.innerHTML = '<div style="color:#c53030;">⚠️ URL Spreadsheet belum diatur. Silakan atur di menu ⚙️ Pengaturan.</div>';
+      return;
+    }
+
+    statusEl.innerHTML = '<div style="color:#2b6cb0;">⏳ Mengirim nilai ke Spreadsheet...</div>';
+
+    fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nama, nilai, benar, salah })
+    })
+    .then(() => {
+      statusEl.innerHTML = '<div style="color:#22543d;">✅ Nilai berhasil dikirim ke Spreadsheet Guru!</div>';
+    })
+    .catch(err => {
+      statusEl.innerHTML = '<div style="color:#c53030;">❌ Gagal mengirim: ' + err.message + '</div>';
+    });
+  }
+</script>
+
+</body>
+</html>
+
