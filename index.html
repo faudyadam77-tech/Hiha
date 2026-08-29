@@ -32,6 +32,29 @@
   .section { display: none; }
   .section.active { display: block; }
 
+  /* Menu Navigasi */
+  .menu-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .menu-btn {
+    padding: 10px 20px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+  .menu-btn:hover, .menu-btn.active {
+    background: #667eea;
+    color: white;
+  }
+
   /* Kartu Kosakata */
   .vocab-grid {
     display: grid;
@@ -116,28 +139,50 @@
   .result-label { font-size: 20px; color: #718096; margin-bottom: 10px; }
   .result-detail { font-size: 16px; color: #4a5568; margin-top: 10px; }
 
-  /* Setting */
+  /* Setting Box - Lebih Jelas */
   .setting-box {
-    background: #fffbeb; border: 2px solid #f6e05e;
-    border-radius: 15px; padding: 20px; margin-bottom: 20px;
+    background: #fffbeb;
+    border: 3px solid #f6e05e;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
   }
-  .setting-box h3 { color: #975a16; margin-bottom: 10px; }
-  .setting-box p { color: #744210; font-size: 14px; margin-bottom: 10px; }
+  .setting-box h3 {
+    color: #975a16;
+    margin-bottom: 15px;
+    font-size: 20px;
+  }
+  .setting-box p {
+    color: #744210;
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
   .setting-box input {
-    width: 100%; padding: 10px; border: 2px solid #f6e05e;
-    border-radius: 8px; font-size: 14px;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #f6e05e;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
   }
-  .status-msg { padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 14px; display: none; }
-  .status-msg.success { background: #c6f6d5; color: #22543d; display: block; }
-  .status-msg.error { background: #fed7d7; color: #742a2a; display: block; }
-
-  .nav-dots { text-align: center; margin: 20px 0; }
-  .nav-dot {
-    display: inline-block; width: 12px; height: 12px;
-    border-radius: 50%; background: #cbd5e0; margin: 0 5px;
-    cursor: pointer; transition: background 0.3s;
+  .status-msg {
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    display: none;
   }
-  .nav-dot.active { background: #667eea; }
+  .status-msg.success {
+    background: #c6f6d5;
+    color: #22543d;
+    display: block;
+  }
+  .status-msg.error {
+    background: #fed7d7;
+    color: #742a2a;
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -147,17 +192,17 @@
   <p class="subtitle">MI Kelas II — Alat Tulis & Perlengkapan Kelas</p>
   <div class="arabic-title">أَنْظُرْ إِلَى هٰذِهِ الصُّوَرِ!</div>
 
-  <!-- Navigasi -->
-  <div class="nav-dots">
-    <span class="nav-dot active" onclick="showSection('belajar')"></span>
-    <span class="nav-dot" onclick="showSection('kuis')"></span>
-    <span class="nav-dot" onclick="showSection('hasil')"></span>
-    <span class="nav-dot" onclick="showSection('setting')"></span>
+  <!-- Menu Navigasi yang Jelas -->
+  <div class="menu-nav">
+    <button class="menu-btn active" onclick="showSection('belajar')">📖 Belajar</button>
+    <button class="menu-btn" onclick="showSection('kuis')">✏️ Kuis</button>
+    <button class="menu-btn" onclick="showSection('hasil')">📊 Hasil</button>
+    <button class="menu-btn" onclick="showSection('setting')">⚙️ Pengaturan Guru</button>
   </div>
 
   <!-- BAGIAN 1: BELAJAR -->
   <div id="belajar" class="section active">
-    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;">📖 Kosakata (المُفْرَدَات)</h2>
+    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;"> Kosakata (المُفْرَدَات)</h2>
     <div class="vocab-grid">
       <div class="vocab-card">
         <div class="vocab-emoji">📕</div>
@@ -172,13 +217,13 @@
         <div class="vocab-indo">Pena / Pensil</div>
       </div>
       <div class="vocab-card">
-        <div class="vocab-emoji"></div>
+        <div class="vocab-emoji">📗</div>
         <div class="vocab-arabic">كِتَابٌ</div>
         <div class="vocab-latin">kitābun</div>
         <div class="vocab-indo">Buku</div>
       </div>
       <div class="vocab-card">
-        <div class="vocab-emoji">🪑</div>
+        <div class="vocab-emoji"></div>
         <div class="vocab-arabic">كُرْسِيٌّ</div>
         <div class="vocab-latin">kursiyyun</div>
         <div class="vocab-indo">Kursi</div>
@@ -190,7 +235,7 @@
         <div class="vocab-indo">Meja</div>
       </div>
       <div class="vocab-card">
-        <div class="vocab-emoji"></div>
+        <div class="vocab-emoji">📋</div>
         <div class="vocab-arabic">سَبُّورَةٌ</div>
         <div class="vocab-latin">sabbūratun</div>
         <div class="vocab-indo">Papan Tulis</div>
@@ -228,29 +273,29 @@
       <div class="result-detail" id="namaDisplay"></div>
       <div id="sendStatus" style="margin-top:15px;"></div>
     </div>
-    <button class="btn btn-primary btn-center" onclick="showSection('belajar')"> Belajar Lagi</button>
+    <button class="btn btn-primary btn-center" onclick="showSection('belajar')">📖 Belajar Lagi</button>
     <button class="btn btn-warning btn-center" onclick="showSection('kuis')">✏️ Ulangi Kuis</button>
   </div>
 
-  <!-- BAGIAN 4: PENGATURAN (untuk Guru) -->
+  <!-- BAGIAN 4: PENGATURAN GURU (SANGAT JELAS) -->
   <div id="setting" class="section">
-    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;">⚙️ Pengaturan Guru</h2>
+    <h2 style="text-align:center; color:#2d3748; margin-bottom:20px;">️ Pengaturan Guru</h2>
 
     <div class="setting-box">
-      <h3>📊 URL Google Apps Script</h3>
+      <h3>📊 Langkah 1: Masukkan URL Google Apps Script</h3>
       <p>Tempelkan URL Web App dari Google Apps Script di bawah ini. Data nilai siswa akan otomatis terkirim ke Spreadsheet Anda.</p>
       <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/.../exec">
-      <button class="btn btn-success" style="margin-top:10px;" onclick="simpanURL()">💾 Simpan URL</button>
+      <button class="btn btn-success" onclick="simpanURL()">💾 Simpan URL</button>
       <div id="urlStatus" class="status-msg"></div>
     </div>
 
     <div class="setting-box">
-      <h3>📋 Cara Setup Google Spreadsheet</h3>
-      <p><b>Langkah 1:</b> Buat Google Spreadsheet baru</p>
-      <p><b>Langkah 2:</b> Tambahkan header: <code>Tanggal | Nama | Nilai | Benar | Salah</code></p>
-      <p><b>Langkah 3:</b> Klik <b>Extensions → Apps Script</b></p>
-      <p><b>Langkah 4:</b> Tempel kode berikut:</p>
-      <pre style="background:#f7fafc; padding:10px; border-radius:8px; font-size:12px; overflow-x:auto;">function doPost(e) {
+      <h3> Langkah 2: Cara Setup Google Spreadsheet</h3>
+      <p><b>1.</b> Buat Google Spreadsheet baru di <a href="https://sheets.google.com" target="_blank">sheets.google.com</a></p>
+      <p><b>2.</b> Tambahkan header di baris 1: <code>Tanggal | Nama | Nilai | Benar | Salah</code></p>
+      <p><b>3.</b> Klik menu <b>Extensions → Apps Script</b></p>
+      <p><b>4.</b> Hapus semua kode, lalu tempel kode berikut:</p>
+      <pre style="background:#f7fafc; padding:15px; border-radius:8px; font-size:12px; overflow-x:auto; border: 2px solid #e2e8f0;">function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = JSON.parse(e.postData.contents);
   sheet.appendRow([
@@ -264,9 +309,19 @@
     JSON.stringify({status: "sukses"})
   ).setMimeType(ContentService.MimeType.JSON);
 }</pre>
-      <p><b>Langkah 5:</b> Klik <b>Deploy → New Deployment → Web App</b></p>
-      <p><b>Langkah 6:</b> Set "Who has access" = <b>Anyone</b>, lalu Deploy</p>
-      <p><b>Langkah 7:</b> Salin URL dan tempel di kolom atas ↑</p>
+      <p><b>5.</b> Klik tombol <b>Deploy → New Deployment</b></p>
+      <p><b>6.</b> Pilih tipe: <b>Web app</b></p>
+      <p><b>7.</b> Set "Execute as" = <b>Me</b>, "Who has access" = <b>Anyone</b></p>
+      <p><b>8.</b> Klik <b>Deploy</b>, lalu salin URL yang muncul</p>
+      <p><b>9.</b> Kembali ke halaman ini, tempel URL di kolom atas, klik <b>💾 Simpan URL</b></p>
+      <p><b>10.</b> Selesai! Nilai siswa akan otomatis masuk ke Spreadsheet Anda ✅</p>
+    </div>
+
+    <div class="setting-box" style="background: #f0fff4; border-color: #48bb78;">
+      <h3 style="color: #22543d;">✅ Status Koneksi</h3>
+      <div id="connectionStatus">
+        <p style="color: #718096;">Belum ada URL yang disimpan</p>
+      </div>
     </div>
   </div>
 </div>
@@ -339,10 +394,13 @@
   function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
-    const sections = ['belajar', 'kuis', 'hasil', 'setting'];
-    const idx = sections.indexOf(id);
-    if (idx >= 0) document.querySelectorAll('.nav-dot')[idx].classList.add('active');
+    document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Update status koneksi jika di halaman setting
+    if (id === 'setting') {
+      updateConnectionStatus();
+    }
   }
 
   // ===== URL SCRIPT =====
@@ -355,7 +413,7 @@
     const statusEl = document.getElementById('urlStatus');
     if (!url) {
       statusEl.className = 'status-msg error';
-      statusEl.textContent = '❌ URL tidak boleh kosong!';
+      statusEl.textContent = ' URL tidak boleh kosong!';
       return;
     }
     if (!url.includes('script.google.com')) {
@@ -365,12 +423,26 @@
     }
     localStorage.setItem('googleScriptURL', url);
     statusEl.className = 'status-msg success';
-    statusEl.textContent = '✅ URL berhasil disimpan!';
+    statusEl.textContent = '✅ URL berhasil disimpan! Nilai siswa akan otomatis terkirim ke Spreadsheet Anda.';
+    updateConnectionStatus();
+  }
+
+  function updateConnectionStatus() {
+    const url = getScriptURL();
+    const statusDiv = document.getElementById('connectionStatus');
+    if (url) {
+      statusDiv.innerHTML = '<p style="color: #22543d; font-weight: bold;">✅ Terhubung ke Spreadsheet</p><p style="color: #4a5568; font-size: 12px; word-break: break-all;">' + url + '</p>';
+    } else {
+      statusDiv.innerHTML = '<p style="color: #718096;">⚠️ Belum ada URL yang disimpan</p>';
+    }
   }
 
   window.addEventListener('load', () => {
     const saved = getScriptURL();
-    if (saved) document.getElementById('scriptUrl').value = saved;
+    if (saved) {
+      document.getElementById('scriptUrl').value = saved;
+      updateConnectionStatus();
+    }
   });
 
   // ===== KUIS =====
@@ -443,11 +515,11 @@
     const statusEl = document.getElementById('sendStatus');
 
     if (!url) {
-      statusEl.innerHTML = '<div style="color:#c53030;">⚠️ URL Spreadsheet belum diatur. Silakan atur di menu ⚙️ Pengaturan.</div>';
+      statusEl.innerHTML = '<div style="color:#c53030; padding: 15px; background: #fed7d7; border-radius: 8px;">⚠️ URL Spreadsheet belum diatur. Silakan klik menu <b>⚙️ Pengaturan Guru</b> untuk mengatur URL.</div>';
       return;
     }
 
-    statusEl.innerHTML = '<div style="color:#2b6cb0;">⏳ Mengirim nilai ke Spreadsheet...</div>';
+    statusEl.innerHTML = '<div style="color:#2b6cb0; padding: 15px; background: #bee3f8; border-radius: 8px;"> Mengirim nilai ke Spreadsheet...</div>';
 
     fetch(url, {
       method: 'POST',
@@ -456,14 +528,14 @@
       body: JSON.stringify({ nama, nilai, benar, salah })
     })
     .then(() => {
-      statusEl.innerHTML = '<div style="color:#22543d;">✅ Nilai berhasil dikirim ke Spreadsheet Guru!</div>';
+      statusEl.innerHTML = '<div style="color:#22543d; padding: 15px; background: #c6f6d5; border-radius: 8px;">✅ Nilai berhasil dikirim ke Spreadsheet Guru!</div>';
     })
     .catch(err => {
-      statusEl.innerHTML = '<div style="color:#c53030;">❌ Gagal mengirim: ' + err.message + '</div>';
+      statusEl.innerHTML = '<div style="color:#c53030; padding: 15px; background: #fed7d7; border-radius: 8px;">❌ Gagal mengirim: ' + err.message + '</div>';
     });
   }
 </script>
 
 </body>
 </html>
-
+2
